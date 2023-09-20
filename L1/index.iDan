@@ -1,0 +1,9 @@
+xoxoxo("bu menim ilk proqramlasdirma dilimdir!")
+xoxoxo("Adini iDan qoydum, cunki, Aydan bele istedi!")
+
+eger("iDan"==="Aydan"){
+    xoxoxo("beli bu dogrudur")
+}
+yoxsa{
+    xoxoxo("xeyr, teessuf, sizin hardasa yanlisiniz var!")
+}

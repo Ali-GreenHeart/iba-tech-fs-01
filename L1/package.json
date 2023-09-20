@@ -1,0 +1,16 @@
+{
+  "name": "iba",
+  "version": "1.0.0",
+  "description": "this is the first node project that we have created. ok!",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "ali & iba",
+  "license": "ISC",
+  "keywords": [],
+  "dependencies": {
+    "nodemon": "^3.0.1"
+  }
+}
