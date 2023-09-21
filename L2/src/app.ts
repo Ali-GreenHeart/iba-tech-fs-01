@@ -197,3 +197,87 @@
 //     ownerName: "",
 //     ownerAge: 0
 // }
+
+
+// function
+// type Func = (a: number, b: number) => number;
+
+// const sum: Func = (a: number, b: number) => {
+//     return "salam"
+// }
+
+// console.log(sum(12, 23))
+
+
+
+// function multiply(a: number): number {
+//     return a;
+// }
+
+
+
+// interface IProps {
+//     name: string;
+//     age: number;
+// }
+
+// const showInfo = ({ name, age }: IProps) => {
+//     console.log(`Hi, My name is ${name}, I'm ${age} years old. `)
+// }
+
+
+
+// class Person {
+//     private name = ''
+//     constructor(name: string) {
+//         this.name = name
+//     }
+// }
+
+// const ali = new Person("alion")
+
+// console.log(ali.name)
+
+
+
+// function getFirstItem<T>(arr: T[]): T {
+//     return arr[0]
+// }
+
+// getLastItem
+
+// const getFirstItem = <T>(arr: T[]): T => arr[0]
+// const getLastItem = <T>(arr: T[]): T => arr[arr.length - 1]
+
+// console.log(getFirstItem<number>([1, 2, 3, 4, 5]))
+// console.log(getFirstItem<string>(['ali', 'ahmad', 'parviz']))
+// console.log(getFirstItem<{ ad: string }>([{ ad: 'ali' }, { ad: 'ahmad' }]))
+
+
+interface IUser {
+    id: string | number;
+    username: string;
+    age: number;
+}
+const BASE_URL = `https://jsonplaceholder.typicode.com`
+
+async function fetchApi<T>(url: string): Promise<T> {
+    const resp = await fetch(url)
+    return resp.json()
+}
+
+async function getUsers() {
+    const users = await fetchApi<IUser[]>(`${BASE_URL}/users`)
+    console.log(users[0])
+}
+
+getUsers()
+
+
+// interface IProduct {
+//     id: number;
+//     name: string;
+// }
+// async function getProductById(id: number) {
+//     const products = await fetchApi<IProduct>(`https://some url/products/${id}`)
+// }
