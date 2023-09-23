@@ -115,7 +115,31 @@ const newServerByAli = http.createServer((req, res) => {
                         .end(err.message ?? 'Server error!')
                 }
                 break;
+            case "DELETE":
+                try {
+                    if (id && !isNaN(id)) {
+                        users = users.filter((user) => user.id != id)
+                        return res
+                            .writeHead(200, 'ok!')
+                            .end('User has been deleted!')
+                    } else {
+                        throw new Error("ID is not provided!")
+                    }
+                } catch (err) {
+                    return res
+                        .writeHead(500, err.message ?? 'sorry something has happened! maybe you, maybe us!')
+                        .end(err.message ?? 'Server error!')
+                }
+                break;
+            default:
+                return res.
+                    writeHead(404, 'method is not supported!')
+                    .end("Method is not supported!")
         }
+    } else {
+        return res.
+            writeHead(404, 'endpoint not found!')
+            .end()
     }
 })
 
