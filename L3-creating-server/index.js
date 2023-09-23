@@ -13,6 +13,9 @@ const newServerByAli = http.createServer((req, res) => {
             pageName = "./pages/index.html"
         } else {
             pageName = "./pages/notfound.html"
+            res.writeHead(404, "Page has not be found!", {
+                'Content-Type': 'text/html'
+            })
         }
         readFile(pageName)
             .then((value) => {
