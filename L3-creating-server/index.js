@@ -1,5 +1,9 @@
 import http from "http"
 import fs from "fs/promises"
+import dotenv from 'dotenv'
+dotenv.config()
+
+console.log(process.env.API_TOKEN)
 
 async function getUsersFromDB() {
     const _json = await fs.readFile("./db/db.json", {
