@@ -1,26 +1,79 @@
 import http from "http"
-import { readFile } from "fs/promises"
 
+const users = [
+    {
+        "id": 1,
+        "name": "Leanne Graham",
+        "username": "Bret",
+        "email": "Sincere@april.biz",
+    },
+    {
+        "id": 2,
+        "name": "Ervin Howell",
+        "username": "Antonette",
+        "email": "Shanna@melissa.tv",
+    },
+    {
+        "id": 3,
+        "name": "Clementine Bauch",
+        "username": "Samantha",
+        "email": "Nathan@yesenia.net",
+    },
+    {
+        "id": 4,
+        "name": "Patricia Lebsack",
+        "username": "Karianne",
+        "email": "Julianne.OConner@kory.org",
+    },
+    {
+        "id": 5,
+        "name": "Chelsey Dietrich",
+        "username": "Kamren",
+        "email": "Lucio_Hettinger@annie.ca",
+    },
+    {
+        "id": 6,
+        "name": "Mrs. Dennis Schulist",
+        "username": "Leopoldo_Corkery",
+        "email": "Karley_Dach@jasper.info",
+    },
+    {
+        "id": 7,
+        "name": "Kurtis Weissnat",
+        "username": "Elwyn.Skiles",
+        "email": "Telly.Hoeger@billy.biz",
+    },
+    {
+        "id": 8,
+        "name": "Nicholas Runolfsdottir V",
+        "username": "Maxime_Nienow",
+        "email": "Sherwood@rosamond.me",
+    },
+    {
+        "id": 9,
+        "name": "Glenna Reichert",
+        "username": "Delphine",
+        "email": "Chaim_McDermott@dana.io",
+    },
+    {
+        "id": 10,
+        "name": "Clementina DuBuque",
+        "username": "Moriah.Stanton",
+        "email": "Rey.Padberg@karina.biz",
+    }
+]
 
 
 const newServerByAli = http.createServer((req, res) => {
-    console.log(req.url)
-    let pageName = ''
-    if (req.url !== '/favicon.ico') {
-        if (req.url === '/about') {
-            pageName = "./pages/about.html"
-        } else if (req.url === '/') {
-            pageName = "./pages/index.html"
-        } else {
-            pageName = "./pages/notfound.html"
-            res.writeHead(404, "Page has not be found!", {
-                'Content-Type': 'text/html'
-            })
+    let endPoint = req.url.slice(5)
+    if (req.url.startsWith('/api') && endPoint === 'users') {
+        switch (req.method) {
+            case 'GET':
+                res.writeHead(200, 'ok!', {
+                    'Content-Type': "application/json"
+                })
+                return res.end(JSON.stringify(users))
         }
-        readFile(pageName)
-            .then((value) => {
-                res.end(value)
-            })
     }
 })
 
