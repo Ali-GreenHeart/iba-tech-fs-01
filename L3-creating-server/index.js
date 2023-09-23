@@ -1,70 +1,19 @@
 import http from "http"
+import fs from "fs/promises"
 
-let users = [
-    {
-        "id": 1,
-        "name": "Leanne Graham",
-        "username": "Bret",
-        "email": "Sincere@april.biz",
-    },
-    {
-        "id": 2,
-        "name": "Ervin Howell",
-        "username": "Antonette",
-        "email": "Shanna@melissa.tv",
-    },
-    {
-        "id": 3,
-        "name": "Clementine Bauch",
-        "username": "Samantha",
-        "email": "Nathan@yesenia.net",
-    },
-    {
-        "id": 4,
-        "name": "Patricia Lebsack",
-        "username": "Karianne",
-        "email": "Julianne.OConner@kory.org",
-    },
-    {
-        "id": 5,
-        "name": "Chelsey Dietrich",
-        "username": "Kamren",
-        "email": "Lucio_Hettinger@annie.ca",
-    },
-    {
-        "id": 6,
-        "name": "Mrs. Dennis Schulist",
-        "username": "Leopoldo_Corkery",
-        "email": "Karley_Dach@jasper.info",
-    },
-    {
-        "id": 7,
-        "name": "Kurtis Weissnat",
-        "username": "Elwyn.Skiles",
-        "email": "Telly.Hoeger@billy.biz",
-    },
-    {
-        "id": 8,
-        "name": "Nicholas Runolfsdottir V",
-        "username": "Maxime_Nienow",
-        "email": "Sherwood@rosamond.me",
-    },
-    {
-        "id": 9,
-        "name": "Glenna Reichert",
-        "username": "Delphine",
-        "email": "Chaim_McDermott@dana.io",
-    },
-    {
-        "id": 10,
-        "name": "Clementina DuBuque",
-        "username": "Moriah.Stanton",
-        "email": "Rey.Padberg@karina.biz",
-    }
-]
+async function getUsersFromDB() {
+    const _json = await fs.readFile("./db/db.json", {
+        encoding: 'utf-8'
+    })
+    return JSON.parse(_json);
+}
+async function writeUsersToDB(users) {
+    await fs.writeFile("./db/db.json", users)
+}
 
-
-const newServerByAli = http.createServer((req, res) => {
+getUsersFromDB()
+const newServerByAli = http.createServer(async (req, res) => {
+    let users = await getUsersFromDB()
     res.writeHead(200, 'ok!', {
         'Content-Type': "application/json"
     })
@@ -81,6 +30,7 @@ const newServerByAli = http.createServer((req, res) => {
                     req.on("data", (chunk) => {
                         const newUser = JSON.parse(chunk.toString())
                         users.push(newUser)
+                        writeUsersToDB(JSON.stringify(users))
                         return res
                             .writeHead(201, 'created!')
                             .end('User has been created!')
@@ -97,6 +47,7 @@ const newServerByAli = http.createServer((req, res) => {
                         req.on("data", (chunk) => {
                             const editedUser = JSON.parse(chunk.toString())
                             users = users.map((user) => {
+                                writeUsersToDB(JSON.stringify(users))
                                 if (user.id == id) {
                                     return editedUser;
                                 }
@@ -119,6 +70,7 @@ const newServerByAli = http.createServer((req, res) => {
                 try {
                     if (id && !isNaN(id)) {
                         users = users.filter((user) => user.id != id)
+                        writeUsersToDB(JSON.stringify(users))
                         return res
                             .writeHead(200, 'ok!')
                             .end('User has been deleted!')
