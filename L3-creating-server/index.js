@@ -1,6 +1,6 @@
 import http from "http"
 
-const users = [
+let users = [
     {
         "id": 1,
         "name": "Leanne Graham",
@@ -65,13 +65,13 @@ const users = [
 
 
 const newServerByAli = http.createServer((req, res) => {
+    res.writeHead(200, 'ok!', {
+        'Content-Type': "application/json"
+    })
     let [, api, endPoint, id] = req.url.split('/')
     if (api === 'api' && endPoint === 'users') {
         switch (req.method) {
             case 'GET':
-                res.writeHead(200, 'ok!', {
-                    'Content-Type': "application/json"
-                })
                 if (id && !isNaN(id)) {
                     return res.end(JSON.stringify(users.find((user) => user.id == id + '')))
                 }
@@ -90,7 +90,31 @@ const newServerByAli = http.createServer((req, res) => {
                         .writeHead(500, 'sorry something has happened! maybe you, maybe us!')
                         .end('Server error!')
                 }
-
+                break;
+            case "PUT":
+                try {
+                    if (id && !isNaN(id)) {
+                        req.on("data", (chunk) => {
+                            const editedUser = JSON.parse(chunk.toString())
+                            users = users.map((user) => {
+                                if (user.id == id) {
+                                    return editedUser;
+                                }
+                                return user;
+                            })
+                            return res
+                                .writeHead(201, 'edited!')
+                                .end('User has been changed!')
+                        })
+                    } else {
+                        throw new Error("ID is not provided!")
+                    }
+                } catch (err) {
+                    return res
+                        .writeHead(500, err.message ?? 'sorry something has happened! maybe you, maybe us!')
+                        .end(err.message ?? 'Server error!')
+                }
+                break;
         }
     }
 })
