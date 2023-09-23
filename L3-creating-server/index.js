@@ -65,14 +65,32 @@ const users = [
 
 
 const newServerByAli = http.createServer((req, res) => {
-    let endPoint = req.url.slice(5)
-    if (req.url.startsWith('/api') && endPoint === 'users') {
+    let [, api, endPoint, id] = req.url.split('/')
+    if (api === 'api' && endPoint === 'users') {
         switch (req.method) {
             case 'GET':
                 res.writeHead(200, 'ok!', {
                     'Content-Type': "application/json"
                 })
+                if (id && !isNaN(id)) {
+                    return res.end(JSON.stringify(users.find((user) => user.id == id + '')))
+                }
                 return res.end(JSON.stringify(users))
+            case "POST":
+                try {
+                    req.on("data", (chunk) => {
+                        const newUser = JSON.parse(chunk.toString())
+                        users.push(newUser)
+                        return res
+                            .writeHead(201, 'created!')
+                            .end('User has been created!')
+                    })
+                } catch (error) {
+                    return res
+                        .writeHead(500, 'sorry something has happened! maybe you, maybe us!')
+                        .end('Server error!')
+                }
+
         }
     }
 })
