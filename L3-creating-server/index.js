@@ -1,42 +1,24 @@
 import http from "http"
-
+import { readFile } from "fs/promises"
 
 
 
 const newServerByAli = http.createServer((req, res) => {
     console.log(req.url)
+    let pageName = ''
     if (req.url !== '/favicon.ico') {
         if (req.url === '/about') {
-            res.end(initialHTML('about', '<h1>You want to know about me!😈</h1>'))
+            pageName = "./pages/about.html"
         } else if (req.url === '/') {
-            res.end(initialHTML('home', '<h1>Hell0 W0rld!</h1>'))
+            pageName = "./pages/index.html"
         } else {
-            res.end(initialHTML('404 not found', '<h1>Haha, Not Found!🙄</h1>'))
+            pageName = "./pages/notfound.html"
         }
+        readFile(pageName)
+            .then((value) => {
+                res.end(value)
+            })
     }
 })
 
 newServerByAli.listen(8080)
-
-
-function initialHTML(title, innerCode) {
-    return `
-    <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>${title}</title>
-    </head>
-
-    <body>
-    <nav>
-    <a  href="/" > go home </a>
-    <a  href="/about" > about </a>
-    <a  href="/miri" > Miri</a>
-    </nav>
-        ${innerCode}
-    </body>
-
-    </html>
-
-    `
-}
