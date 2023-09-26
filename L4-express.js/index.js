@@ -3,12 +3,14 @@ import { readFile } from "fs/promises";
 import users from "./data.js";
 import logger from "./middlewares/logger.js";
 import authMiddleware from "./middlewares/auth.js";
+import urlMethodLogger from "./middlewares/urlMethodLogger.js";
 
 const app = express()
 
 app.use(express.json())
 // app.use(logger)
-app.use(authMiddleware)
+// app.use(authMiddleware)
+app.use(urlMethodLogger)
 
 app.get("/users", (req, res) => {
     console.log(req.url)

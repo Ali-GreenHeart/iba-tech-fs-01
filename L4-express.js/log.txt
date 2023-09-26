@@ -1,0 +1,6 @@
+1695750507347 - GET - /users 
+1695750597630 - GET - /users 
+1695750618827 - POST - /users 
+1695750626465 - DELETE - /users/3 
+1695750645132 - DELETE - /users/3 
+1695750694989 - DELETE - localhost - /users/3 
