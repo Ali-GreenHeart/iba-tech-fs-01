@@ -4,3 +4,10 @@
 1695750626465 - DELETE - /users/3 
 1695750645132 - DELETE - /users/3 
 1695750694989 - DELETE - localhost - /users/3 
+1695751634943 - DELETE - localhost - /users/3 
+1695751654670 - DELETE - localhost - /users/3 
+1695751659190 - GET - localhost - /users 
+1695751664103 - DELETE - localhost - /users/4 
+1695751665938 - GET - localhost - /users 
+1695751773187 - GET - localhost - /animals 
+1695751777414 - GET - localhost - /users/animals 

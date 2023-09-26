@@ -1,53 +1,17 @@
 import express from "express";
 import { readFile } from "fs/promises";
-import users from "./data.js";
-import logger from "./middlewares/logger.js";
-import authMiddleware from "./middlewares/auth.js";
 import urlMethodLogger from "./middlewares/urlMethodLogger.js";
+import usersRouter from "./routes/users.js";
 
 const app = express()
 
 app.use(express.json())
-// app.use(logger)
-// app.use(authMiddleware)
 app.use(urlMethodLogger)
+app.use("/users", usersRouter)
 
-app.get("/users", (req, res) => {
-    console.log(req.url)
-    console.log(req.method)
-    console.log('mee')
-    res.writeHead(201, "ok!", {
-        "Content-Type": "application/json"
-    })
-
-    let data = users.filter((user) => req.query.name ? user.name.toLowerCase().startsWith(req.query.name.toLowerCase()) : true)
-
-    return res.status(200).end(JSON.stringify(data))
+app.get('/animals', (req, res) => {
+    return res.end('just animals')
 })
-app.post("/users", (req, res) => {
-    users.push(req.body)
-    return res.status(201).end('User has been created successfully!')
-})
-app.put("/users/:id", (req, res) => {
-    const _id = req.params.id
-    const indexOfUser = users.findIndex(({ id }) => id === _id)
-    users.splice(indexOfUser, 1, req.body)
-    res.writeHead(201, "ok!", {
-        "Content-Type": "application/json"
-    })
-    return res.end("User edited successfully!")
-})
-
-app.delete("/users/:id", (req, res) => {
-    const _id = req.params.id
-    const indexOfUser = users.findIndex(({ id }) => id === _id)
-    users.splice(indexOfUser, 1)
-    res.writeHead(200, "ok!", {
-        "Content-Type": "application/json"
-    })
-    return res.end("User deleted successfully!")
-})
-
 app.get('*', async (req, res) => {
     const content = await readFile("./pages/notfound.html")
     res.end(content)
