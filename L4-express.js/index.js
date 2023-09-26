@@ -1,12 +1,15 @@
 import express from "express";
 import { readFile } from "fs/promises";
 import users from "./data.js";
+import logger from "./middlewares/logger.js";
 
 const app = express()
 
 app.use(express.json())
+app.use(logger)
 
 app.get("/users", (req, res) => {
+    console.log('mee')
     res.writeHead(201, "ok!", {
         "Content-Type": "application/json"
     })
