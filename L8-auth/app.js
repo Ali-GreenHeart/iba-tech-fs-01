@@ -16,7 +16,7 @@ app.post('/login', (req, res) => {
     const { username, password } = req.body
     const id = genId()
     users.push({ id, username, password })
-    const token = jwt.sign({ id }, process.env.JWT_SECRET_KEY)
+    const token = jwt.sign({ id }, process.env.JWT_SECRET_KEY, { expiresIn: '1d' })
     return res.status(201).json({ token, id, msg: 'new user has been created!', })
 })
 app.post('/order-product', authMiddleware, (req, res) => {
