@@ -1,6 +1,7 @@
 import { Router } from "express";
 import _cars from "./cars.db.js"
 import { v4 as genId } from 'uuid'
+import authMiddleware from "./authMiddleware.js";
 
 let cars = _cars
 
@@ -48,7 +49,7 @@ carRouter.get("/:carId", (req, res) => {
     const car = cars.find(({ id }) => id === carId)
     return res.status(200).json(car)
 })
-carRouter.delete("/:carId", (req, res) => {
+carRouter.delete("/:carId", authMiddleware, (req, res) => {
     const carId = req.params.carId
     cars = cars.map((car) => {
         if (car.id === carId) {
