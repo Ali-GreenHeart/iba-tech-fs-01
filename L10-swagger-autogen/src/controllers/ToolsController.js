@@ -8,5 +8,8 @@ module.exports = {
 
 	async delete(req, res) {
 		return res.status(204).send("delete")
+	},
+	async put(req, res) {
+		return res.status(200).send("edited...")
 	}
 }

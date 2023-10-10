@@ -17,5 +17,11 @@ router.route('/test-delete/:id').delete(authorize, async (req, res, next) => {
         message: 'Delete!'
     })
 })
+router.route('/test-put/:id').put(authorize, async (req, res, next) => {
+    res.status(200).json({
+        msg: [],
+        message: 'Edited!'
+    })
+})
 
 module.exports = router

@@ -13,7 +13,7 @@ router.use('/v2', apiV2)
 router.get('/test-get', ToolsController.show)
 router.post('/test-post', store)
 router.delete('/test-delete/:id', ToolsController.delete)
-
+router.put('/test-put/:id', ToolsController.put)
 function store(req, res) {
     const tools = {}
     return res.status(201).send({})
