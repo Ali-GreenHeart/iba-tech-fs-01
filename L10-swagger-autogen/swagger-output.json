@@ -73,6 +73,24 @@
         }
       }
     },
+    "/test-put/{id}": {
+      "put": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/signin": {
       "post": {
         "tags": [
@@ -151,6 +169,39 @@
             "in": "path",
             "required": true,
             "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/v2/test-put/{id}": {
+      "put": {
+        "tags": [
+          "User"
+        ],
+        "description": "Endpoint to edit the user",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "obj",
+            "in": "body",
+            "description": "New User information.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/EditUser"
+            }
           }
         ],
         "responses": {
@@ -241,6 +292,27 @@
         "about": {
           "type": "string",
           "example": ""
+        }
+      },
+      "required": [
+        "name",
+        "age"
+      ]
+    },
+    "EditUser": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "John Doe"
+        },
+        "age": {
+          "type": "number",
+          "example": 30
+        },
+        "about": {
+          "type": "string",
+          "example": "a few words..."
         }
       },
       "required": [

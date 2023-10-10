@@ -18,6 +18,15 @@ router.route('/test-delete/:id').delete(authorize, async (req, res, next) => {
     })
 })
 router.route('/test-put/:id').put(authorize, async (req, res, next) => {
+    /* 	#swagger.tags = ['User']
+        #swagger.description = 'Endpoint to edit the user' */
+
+    /*	#swagger.parameters['obj'] = {
+            in: 'body',
+            description: 'New User information.',
+            required: true,
+            schema: { $ref: "#/definitions/EditUser" }
+    } */
     res.status(200).json({
         msg: [],
         message: 'Edited!'

@@ -53,7 +53,12 @@ const doc = {
             $name: "Jhon Doe",
             $age: 29,
             about: ""
-        }
+        },
+        EditUser: {
+            $name: "John Doe",
+            $age: 30,
+            about: "a few words..."
+        },
     }
 }
 
