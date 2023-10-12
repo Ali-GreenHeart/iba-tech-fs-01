@@ -14,7 +14,7 @@ io.on('connection', (socket) => {
         io.emit('chat message', msg);
     });
     socket.on('disconnect', () => {
-        console.log('a friend left us!')
+        io.emit('someone disconnected', 'a friend left us!')
     })
 });
 server.listen(3000, () => {

@@ -85,6 +85,14 @@
             messages.appendChild(item);
             window.scrollTo(0, document.body.scrollHeight);
         });
+        socket.on('someone disconnected', (msg) => {
+            let item = document.createElement('li');
+            item.textContent = msg;
+            item.style.backgroundColor = 'red'
+            item.style.color = 'white'
+            messages.appendChild(item);
+            window.scrollTo(0, document.body.scrollHeight);
+        })
     </script>
 </body>
 
