@@ -15,6 +15,9 @@ io.on('connection', (socket) => {
     socket.on('chat message', ({ nick, msg }) => {
         io.emit('chat message', `${nick}: ${msg}`);
     });
+    socket.on('typing', ({ nick }) => {
+        io.emit('someone is typing', `${nick} is typing!`)
+    })
     socket.on('disconnect', () => {
         io.emit('someone disconnected', `a friend left us!`)
     })

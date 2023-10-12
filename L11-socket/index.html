@@ -63,7 +63,9 @@
 </head>
 
 <body>
-    <ul id="messages"></ul>
+    <ul id="messages">
+        <li id="typing"></li>
+    </ul>
     <form id="form" action="">
         <input id="input" autocomplete="off" /><button>Send 😁</button>
     </form>
@@ -104,7 +106,18 @@
             window.scrollTo(0, document.body.scrollHeight);
         })
         input.oninput = () => {
-            console.log(input.value)
+            socket.emit('typing', { nick: nickname });
+            socket.on('someone is typing', (msg) => {
+                const typing = document.getElementById('typing')
+                typing.style.display = 'block'
+                typing.textContent = msg;
+                typing.style.backgroundColor = 'cadetblue'
+                typing.style.color = 'black'
+                window.scrollTo(0, document.body.scrollHeight);
+                setTimeout(() => {
+                    typing.style.display = 'none'
+                }, 1000)
+            })
         }
     </script>
 </body>
