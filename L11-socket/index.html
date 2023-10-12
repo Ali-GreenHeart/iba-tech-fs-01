@@ -59,6 +59,7 @@
             background: #efefef;
         }
     </style>
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
 </head>
 
 <body>
@@ -66,6 +67,19 @@
     <form id="form" action="">
         <input id="input" autocomplete="off" /><button>Send 😁</button>
     </form>
+    <script>
+        let socket = io();
+        let form = document.getElementById('form');
+        let input = document.getElementById('input');
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault(); // no refresh!
+            if (input.value) {
+                socket.emit('chat message', input.value);
+                input.value = '';
+            }
+        });
+    </script>
 </body>
 
 </html>
