@@ -71,11 +71,13 @@
         let socket = io();
         let form = document.getElementById('form');
         let input = document.getElementById('input');
+        const nickname = prompt('Enter your nick, plz: ')
+
 
         form.addEventListener('submit', (e) => {
             e.preventDefault(); // no refresh!
             if (input.value) {
-                socket.emit('chat message', input.value);
+                socket.emit('chat message', { nick: nickname, msg: input.value });
                 input.value = '';
             }
         });
@@ -93,6 +95,17 @@
             messages.appendChild(item);
             window.scrollTo(0, document.body.scrollHeight);
         })
+        socket.on('someone connected', (msg) => {
+            let item = document.createElement('li');
+            item.textContent = msg;
+            item.style.backgroundColor = 'greenyellow'
+            item.style.color = 'black'
+            messages.appendChild(item);
+            window.scrollTo(0, document.body.scrollHeight);
+        })
+        input.oninput = () => {
+            console.log(input.value)
+        }
     </script>
 </body>
 
